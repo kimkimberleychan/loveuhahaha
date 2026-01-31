@@ -2,6 +2,8 @@ let yesButton = document.getElementById("yes");
 let noButton = document.getElementById("no");
 let questionText = document.getElementById("question");
 let mainImage = document.getElementById("mainImage");
+let backgroundMusic = document.getElementById("backgroundMusic");
+let musicToggle = document.getElementById("musicToggle");
 
 const params = new URLSearchParams(window.location.search);
 let username = params.get("name");
@@ -74,35 +76,42 @@ yesButton.addEventListener("click", function () {
     `我們已經在一起 ${diffDays} 天 ❤️` : 
     `再過 ${Math.abs(diffDays)} 天，我們就在一起啦！`;
 
-  // 创建成功页面
-  document.body.innerHTML = `
-    <div class="yes-screen">
-      <h1 class="yes-text"></h1>
-      <img src="images/hug.png" alt="拥抱" class="yes-image">
-      <div class="timer-container">
-        <div class="timer-title">💕 紀念日計時器 💕</div>
-        <div class="timer">
-          <div class="timer-item">
-            <span id="days" class="timer-number">${diffDays}</span>
-            <span class="timer-label">天</span>
-          </div>
-          <div class="timer-item">
-            <span id="hours" class="timer-number">00</span>
-            <span class="timer-label">小時</span>
-          </div>
-          <div class="timer-item">
-            <span id="minutes" class="timer-number">00</span>
-            <span class="timer-label">分鐘</span>
-          </div>
-          <div class="timer-item">
-            <span id="seconds" class="timer-number">00</span>
-            <span class="timer-label">秒</span>
-          </div>
+  // 创建成功页面内容（不替换整个 body，保留音频和控制按钮）
+  const container = document.createElement("div");
+  container.className = "yes-screen";
+  container.innerHTML = `
+    <h1 class="yes-text"></h1>
+    <img src="images/hug.png" alt="拥抱" class="yes-image">
+    <div class="timer-container">
+      <div class="timer-title">💕 紀念日計時器 💕</div>
+      <div class="timer">
+        <div class="timer-item">
+          <span id="days" class="timer-number">${diffDays}</span>
+          <span class="timer-label">天</span>
         </div>
-        <div class="anniversary-date">🎉 從 2025年8月15日 開始 🎉</div>
+        <div class="timer-item">
+          <span id="hours" class="timer-number">00</span>
+          <span class="timer-label">小時</span>
+        </div>
+        <div class="timer-item">
+          <span id="minutes" class="timer-number">00</span>
+          <span class="timer-label">分鐘</span>
+        </div>
+        <div class="timer-item">
+          <span id="seconds" class="timer-number">00</span>
+          <span class="timer-label">秒</span>
+        </div>
       </div>
+      <div class="anniversary-date">🎉 從 2025年8月15日 開始 🎉</div>
     </div>
   `;
+
+  // 移除原始容器但保留音频和控制按钮
+  const originalContainer = document.querySelector(".container");
+  const originalButtons = document.querySelector(".buttons");
+  if (originalContainer) {
+    originalContainer.parentNode.replaceChild(container, originalContainer);
+  }
 
   // 确保用户名安全地插入
   document.querySelector(".yes-text").innerText = loveTest;
@@ -144,4 +153,20 @@ function startRealTimeTimer(startDate) {
   updateTimer();
   setInterval(updateTimer, 1000);
 }
+
+// Music toggle functionality
+let isMusicPlaying = true;
+
+musicToggle.addEventListener("click", function () {
+  if (isMusicPlaying) {
+    backgroundMusic.pause();
+    musicToggle.textContent = "🔇";
+    isMusicPlaying = false;
+  } else {
+    backgroundMusic.play();
+    musicToggle.textContent = "🔊";
+    isMusicPlaying = true;
+  }
+});
+
 ;
