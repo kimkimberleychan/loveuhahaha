@@ -104,6 +104,7 @@ yesButton.addEventListener("click", function () {
       </div>
       <div class="anniversary-date">🎉 從 2025年8月15日 開始 🎉</div>
     </div>
+    <button id="popupBtn" class="popup-button">✨ 打開睇對你說的話 ✨</button>
   `;
 
   // 移除原始容器但保留音频和控制按钮
@@ -116,13 +117,28 @@ yesButton.addEventListener("click", function () {
   // 确保用户名安全地插入
   document.querySelector(".yes-text").innerText = loveTest;
 
-  // 禁止滚动，保持页面美观
-  document.body.style.overflow = "hidden";
+  // 允许滚动
+  document.body.style.overflow = "auto";
 
   // 启动实时计时器（每秒更新）
   if (diffDays >= 0) {
     startRealTimeTimer(togetherDate);
   }
+
+  // 创建落心效果
+  createFallingHearts();
+
+  // 添加弹出按钮事件监听器
+  setTimeout(() => {
+    const popupBtn = document.getElementById("popupBtn");
+    if (popupBtn) {
+      popupBtn.addEventListener("click", function () {
+        // 打开一个弹出窗口
+        const message = "🎁 親愛的bb，我愛你！\n\n多謝你咁耐以來都願意tum我，\n希望我地可以永遠一齊！\n\n❤️ 永遠愛你 ❤️";
+        alert(message);
+      });
+    }
+  }, 100);
 });
 
 // 实时计时器函数
@@ -154,19 +170,63 @@ function startRealTimeTimer(startDate) {
   setInterval(updateTimer, 1000);
 }
 
+// 落心函数
+function createFallingHearts() {
+  const heartContainer = document.createElement("div");
+  heartContainer.className = "heart-container";
+  document.body.appendChild(heartContainer);
+  
+  const hearts = ["❤️", "💕", "💖", "💗", "💝"];
+  
+  // 创建60个落下的心
+  for (let i = 0; i < 60; i++) {
+    setTimeout(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+      
+      // 随机位置
+      const randomLeft = Math.random() * 100;
+      heart.style.left = randomLeft + "%";
+      
+      // 随机动画时间
+      const randomDuration = 3 + Math.random() * 2;
+      heart.style.animationDuration = randomDuration + "s";
+      
+      heartContainer.appendChild(heart);
+      
+      // 动画完成后删除
+      setTimeout(() => {
+        heart.remove();
+      }, randomDuration * 1000);
+    }, i * 100);
+  }
+  
+  // 2秒后移除容器
+  setTimeout(() => {
+    heartContainer.remove();
+  }, 8000);
+}
+
 // Music toggle functionality
 let isMusicPlaying = true;
 
-musicToggle.addEventListener("click", function () {
-  if (isMusicPlaying) {
-    backgroundMusic.pause();
-    musicToggle.textContent = "🔇";
-    isMusicPlaying = false;
-  } else {
-    backgroundMusic.play();
-    musicToggle.textContent = "🔊";
-    isMusicPlaying = true;
-  }
-});
+if (musicToggle && backgroundMusic) {
+  musicToggle.addEventListener("click", function () {
+    if (isMusicPlaying) {
+      backgroundMusic.pause();
+      musicToggle.textContent = "🔇";
+      isMusicPlaying = false;
+    } else {
+      backgroundMusic.play().catch(error => {
+        console.log("Audio autoplay might be blocked:", error);
+      });
+      musicToggle.textContent = "🔊";
+      isMusicPlaying = true;
+    }
+  });
+} else {
+  console.error("Music toggle or background music element not found");
+}
 
 ;

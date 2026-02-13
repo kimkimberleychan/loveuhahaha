@@ -8,6 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: auto;
 }
 
 .container {
@@ -48,19 +49,6 @@ button {
     position: relative;
 }
 
-.yes-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #ffdae0; /* 粉色 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
 .yes-text {
     font-size: 7vw; /* 字体大小根据视口宽度变化 */
 }
@@ -74,6 +62,8 @@ button {
 @media (min-width: 768px) {
     body {
         display: block;
+        height: auto;
+        overflow-y: scroll;
     }
 
     .container {
@@ -83,6 +73,11 @@ button {
         transform: translate(-50%, -50%);
         width: auto;
         max-width: none;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
     #mainImage {
@@ -99,37 +94,48 @@ button {
     }
 
     .yes-text {
-        font-size: 36px; /* 固定字体大小 */
+        font-size: 2.5rem;
+        color: #ff3366;
+        margin-bottom: 30px;
+        animation: pulse 1.5s infinite alternate;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .yes-image {
-        width: 300px; /* 固定图片宽度 */
+        width: 250px;
+        height: 250px;
+        margin-bottom: 40px;
+        animation: float 3s ease-in-out infinite;
     }
     /* 成功页面样式 */
-.yes-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #ffafbd, #ffc3a0);
-    padding: 20px;
-    text-align: center;
-}
+    .yes-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        width: 100%;
+        background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+        padding: 40px 20px;
+        text-align: center;
+        position: relative;
+        box-sizing: border-box;
+    }
 
-.yes-text {
-    font-size: 2.5rem;
-    color: #ff3366;
-    margin-bottom: 30px;
-    animation: pulse 1.5s infinite alternate;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
+    .yes-text {
+        font-size: 2.5rem;
+        color: #ff3366;
+        margin-bottom: 30px;
+        animation: pulse 1.5s infinite alternate;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
 
-.yes-image {
-    width: 250px;
-    height: 250px;
-    margin-bottom: 40px;
-    animation: float 3s ease-in-out infinite;
+    .yes-image {
+        width: 250px;
+        height: 250px;
+        margin-bottom: 40px;
+        animation: float 3s ease-in-out infinite;
+    }
 }
 
 /* 计时器容器样式 */
@@ -282,4 +288,57 @@ button {
 
 .music-toggle:active {
     transform: scale(0.95);
+}
+/* Popup Button */
+.popup-button {
+    margin-top: 30px;
+    background: linear-gradient(135deg, #ff6b8b, #ff9999);
+    color: white;
+    font-size: 1.2rem;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 107, 139, 0.3);
+    font-weight: bold;
+}
+
+.popup-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(255, 107, 139, 0.5);
+}
+
+.popup-button:active {
+    transform: scale(0.98);
+}
+
+/* Heart Animation */
+.heart-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 999;
+}
+
+.heart {
+    position: absolute;
+    font-size: 2rem;
+    animation: fall linear forwards;
+    opacity: 1;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
 }
