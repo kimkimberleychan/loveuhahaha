@@ -104,7 +104,7 @@ yesButton.addEventListener("click", function () {
       </div>
       <div class="anniversary-date">🎉 從 2025年8月15日 開始 🎉</div>
     </div>
-    <button id="popupBtn" class="popup-button">✨ 打開睇對你說的話 ✨</button>
+    <button id="popupBtn" class="popup-button">✨ press here！！ ✨</button>
   `;
 
   // 移除原始容器但保留音频和控制按钮
@@ -134,7 +134,7 @@ yesButton.addEventListener("click", function () {
     if (popupBtn) {
       popupBtn.addEventListener("click", function () {
         // 打开一个弹出窗口
-        const message = "🎁 親愛的bb，我愛你！\n\n多謝你咁耐以來都願意tum我，\n希望我地可以永遠一齊！\n\n❤️ 永遠愛你 ❤️";
+        const message = "🎁 親愛的bb，我愛你！\n\n多謝你咁耐以來都願意tum我，\n希望我地可以永遠一齊！\n\n❤️ 情人節快樂 ❤️";
         alert(message);
       });
     }
